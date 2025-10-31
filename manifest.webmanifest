@@ -1,0 +1,21 @@
+{
+  "name": "Jalan Web React System",
+  "short_name": "JalanWeb",
+  "description": "Progressive Web App for Jalan Web React System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/src/assets/react.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/src/assets/react.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

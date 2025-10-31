@@ -1,0 +1,15 @@
+IMPORTANT!!
+- ayusin yung student grade report
+- ayusin yung design ng custom.jsx
+- ma connect yung scanner sa system at mapagana
+- ayusin yung router
+- maglagay ng link sa admin.jsx para makarekta sa custom.jsx
+- ayusin yung PWA
+- ayusin yung data analysis
+
+
+OPTIONAL
+- mapabilis yung pag insert sa supabase database
+- more design sa system
+- maglagay ng mga comments sa code
+- makuha sa school yung list of courses, subject, section year by year term by term

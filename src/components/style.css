@@ -1,0 +1,933 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+
+h1 {
+  font-style: italic;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+
+}
+
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+}
+
+
+
+/* ------------------------------SETTINGS---------------------------------*/
+.settings-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: whitesmoke;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 128px 0 rgb(30, 216, 61), 0 32px 64px -48px rgba(9, 255, 1, 0.979);
+  text-align: center;
+}
+
+.profile-section {
+  margin-bottom: 20px;
+}
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.account-security-section {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #4CAF50;
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+.box{
+  background: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px;            
+  border-radius: 20px;
+  box-shadow: 0 0 128px 0 rgb(30, 216, 61), 0 32px 64px -48px rgba(9, 255, 1, 0.979);
+}
+
+.form-box{
+  width: 450px;
+  margin: 0px 10px;
+}
+
+.form-box header{
+  font-size: 25px;
+  font-weight: 400;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 10px;
+}
+
+.form-box form .field{
+  display: flex;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+
+.form-box form .input input{
+  height: 40px;
+  width: 100%;
+  font-size: 16px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border-radius: 1px solid #ccc;
+  outline: none;
+}
+
+.btn{
+  height: 35px;
+  background: rgba(9, 255, 1, 0.979); 
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: all .3s;
+  margin-top: 10px;
+  padding: 0px 10px;
+}
+
+.btn:hover{
+  opacity: 0.82;
+}
+.submit{
+  width: 100%;
+}
+
+.link{
+  margin-bottom: 15px;
+}
+
+/* ------------------------------ROLE---------------------------------*/
+
+.field a {
+  padding: 10px 60px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  background-color: #4CAF50;
+  text-align: center;
+}
+
+.field a:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.field a:active {
+  transform: scale(0.95);
+}
+
+
+
+
+/* ------------------------------HOME DASHBOARD---------------------------------*/
+* {
+  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+
+}
+
+header h1 {
+  font-size: 36px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+  text-align: center; 
+  width: 100%;  
+  position: relative;
+  margin-top: 100px;
+}
+
+
+header p {
+  font-size: 18px;
+  color: #777;
+}
+
+/* ------------------------------HOME DASHBOARD OPTION---------------------------------*/
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  gap: 20px; 
+  align-items: center; 
+}
+
+.dashboard-container {
+  
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #ffffff; 
+}
+
+.dashboard-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  margin-top: 100px;
+}
+
+.dashboard-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-item p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+.dashboard-item:hover p {
+  color: #4CAF50;
+}
+
+.dashboard-item a {
+  text-decoration: none;
+  color: inherit; 
+}
+
+.icon img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+/* ------------------------------LOGO---------------------------------*/
+
+.logo-container {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  z-index: 1000;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+}
+/* ------------------------------SETTING---------------------------------*/
+.settings {
+  position: absolute;
+  top: 10px; 
+  right: 15px; 
+  z-index: 1000;
+}
+
+.settings-icon {
+  width: 25px; 
+  height: 25px;
+  cursor: pointer;
+}
+
+
+.settings-icon:hover {
+  transform: scale(1.1); 
+  transition: transform 0.2s ease;
+}
+
+
+
+/* ------------------------------SIDE NAVBAR---------------------------------*/
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.side-navbar {
+  height: 100%; /* Full height */
+  width: 200px; /* Width of the sidebar */
+  position: absolute; /* Fixed position */
+  top: 0;
+  left: 0;
+  padding-top: 10px; /* Padding at the top */
+  align-items: stretch; /* Make links fill the full width */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for design */
+}
+
+.side-navbar a {
+  padding: 15px; /* Padding inside links */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Font size */
+  color: white; /* White text */
+  display: block; /* Make links fill the full width */
+  border-left: 5px solid transparent; /* Add an inactive indicator */
+  transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease; /* Smooth hover transition */
+}
+
+.side-navbar a:hover {
+  background-color: #e4e9f7; /* Highlight color on hover */
+  color: #4CAF50; /* Text color change */
+  border-left: 5px solid #4CAF50; /* Active indicator */
+}
+
+/* Active link styling */
+.side-navbar a.active {
+  background-color: #e4e9f7; /* Highlight color */
+  color: #4CAF50; /* Active text color */
+  border-left: 5px solid #4CAF50; /* Active indicator */
+}
+
+
+/* ------------------------------BACK---------------------------------*/
+
+.back-container {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  z-index: 1000;
+}
+
+.back {
+  width: 50px;
+  height: auto;
+}
+
+.back-container:hover {
+  transform: scale(1.1); 
+  transition: transform 0.2s ease;
+}
+
+/* ------------------------------Answer Key css---------------------------------*/
+.scantron-form {
+  background: whitesmoke;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 128px 0 rgb(30, 216, 61), 0 32px 64px -48px rgba(9, 255, 1, 0.979);
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.scantron-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #4CAF50;
+}
+
+.scantron-form .instructions {
+  background: #f2f2f2;
+  border-left: 5px solid #4CAF50;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.scantron-form .instructions li {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.scantron-form .form-row {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.scantron-form .form-row label {
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.scantron-form .form-row input {
+  height: 40px;
+  padding: 0 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.scantron-form h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #4CAF50;
+  text-align: center;
+}
+
+.scantron-form .answer-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.scantron-form .answer-row span {
+  width: 50px;
+  font-size: 16px;
+  color: #333;
+}
+
+.scantron-form .options {
+  display: flex;
+  gap: 10px;
+}
+
+.scantron-form .option {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+.scantron-form .option:hover {
+  background-color: #e4e9f7;
+}
+
+.scantron-form .option.selected {
+  background-color: #4CAF50;
+  color: #fff;
+  border-color: #4CAF50;
+}
+
+.scantron-form button {
+  width: 100%;
+  height: 40px;
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.scantron-form button:hover {
+  background: #45a049;
+}
+
+/* ------------------------------Answer Sheet css---------------------------------*/
+.answer-key-item {
+  background: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.answer-key-item h2 {
+  font-size: 24px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+.answer-key-item p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.answer-key-item button {
+  margin-right: 10px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.answer-key-item button:hover {
+  background: #45a049;
+}
+
+/* ------------------------------SETTING CSS---------------------------------*/
+/* Settings container styles */
+.settings-container {
+  display: flex;
+  font-size: 1.2rem; /* Bigger base font */
+  height: 70vh;
+  width: 100%;
+  max-width: 1400px; /* Increased maximum width */
+  margin: 0 auto;    /* Centers horizontally (already done by body for vertical) */
+}
+
+.settings-sidebar {
+  width: 250px; /* Sidebar width */
+  border-right: 1px solid #4CAF50;
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.settings-sidebar button {
+  display: block;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  background-color: #4CAF50;
+  border: 1px solid #4CAF50;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.settings-sidebar button:hover {
+  background-color: #4CAF50;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.settings-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* ------------------------------popupquestion CSS---------------------------------*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.modal-buttons button {
+  margin-right: 10px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+
+/* ------------------------------GradeReportcourse CSS---------------------------------*/
+.course-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Responsive styles for tablets and phones */
+@media (max-width: 768px) {
+  .form-box {
+    width: 100% !important;
+    margin: 0 10px !important;
+  }
+  .settings-container {
+    max-width: 100% !important;
+    margin: 20px !important;
+    padding: 15px !important;
+  }
+  .dashboard {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .dashboard-item {
+    width: 100% !important;
+    margin-top: 20px !important;
+  }
+  header h1 {
+    font-size: 24px !important;
+    margin-top: 50px !important;
+    position: relative !important;
+  }
+  .side-navbar {
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    box-shadow: none !important;
+  }
+  .side-navbar a {
+    display: inline-block !important;
+    border-left: none !important;
+    padding: 10px !important;
+  }
+  .logo-container, .settings {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-box {
+    width: 100% !important;
+    margin: 0 5px !important;
+  }
+  .settings-container {
+    padding: 10px !important;
+  }
+  header h1 {
+    font-size: 20px !important;
+    margin-top: 30px !important;
+  }
+  .dashboard-item {
+    padding: 15px !important;
+  }
+}
+
+.course-folder {
+  background: #f9f9f9;
+  padding: 5px;
+  text-align: center;
+  width: 190px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-folder:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-folder img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+/* Set default text color to black and change to green on hover */
+.course-folder p {
+  font-size: 16px;
+  color: black;
+  font-weight: 1000;
+  transition: color 0.3s ease;
+}
+
+.course-folder:hover p {
+  color: #4CAF50;
+}
+
+.course-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.course-content button {
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-bottom: 20px;
+}
+
+.course-content button:hover {
+  background: #45a049;
+}
+
+.course-content h2 {
+  font-size: 24px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+.course-content p {
+  font-size: 16px;
+  color: #333;
+}
+
+
+/* ------------------------------GradeReportsection CSS---------------------------------*/
+.section-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.section-folder {
+  background: #f9f9f9;
+  padding: 10px;
+  text-align: center;
+  width: 150px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-folder:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.section-folder img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+/* Set default text color to black and change to green on hover */
+.section-folder p {
+  font-size: 16px;
+  color: black;
+  font-weight: 1000;
+  transition: color 0.3s ease;
+}
+
+.section-folder:hover p {
+  color: #4CAF50;
+}
+
+.section-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.section-content button {
+  background: #4CAF50;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-bottom: 20px;
+}
+
+.section-content h2 {
+  font-size: 24px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+.section-content p {
+  font-size: 16px;
+  color: #333;
+}
+
+.settings {
+  position: fixed;
+  top: env(safe-area-inset-top, 0);
+  right: 0;
+  z-index: 10000;
+  padding: 10px;
+}
+
+/* ------------------------------admin CSS---------------------------------*/
+.admin-dashboard {
+  margin: 120px auto 0 auto;  /* Push down from the top and center horizontally */
+  max-width: 1200px;          /* Adjust as needed */
+  padding: 40px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.admin-dashboard h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #4CAF50;
+  font-size: 2.5rem;
+  font-style: italic;
+}
+
+.admin-dashboard h2 {
+  color: #4CAF50;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.admin-dashboard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto 40px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-dashboard table th,
+.admin-dashboard table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.admin-dashboard table th {
+  background-color: #4CAF50;
+  color: #fff;
+  font-weight: 600;
+}
+
+.admin-dashboard table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.admin-dashboard table tr:hover {
+  background-color: #e4e9f7;
+}
+
+.top-icons {
+  position: absolute;
+  top: 12px;   
+  right: 12px;  
+  display: flex;
+  gap: 8px;   
+}
+
+.pdf-icon {
+  width: 24px; 
+  height: auto; 
+}
+
+
+/* Add to style.css */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.dashboard-container.dark-mode {
+  background: #181818;
+  color: #eee;
+}
+.dashboard-container.dark-mode input,
+.dashboard-container.dark-mode .modal {
+  background: #222;
+  color: #eee;
+}
+
+/* prevent any accidental sideways scrolling */
+html, body, #root {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* ensure all elements inherit box-sizing */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Navbar tweaks */
+.top-navbar {
+  left: 0;
+  right: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* make card content wrap nicely on narrow screens */
+.admin-card, .approval-card {
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow: visible;
+}
+
+/* ensure inputs can shrink in flex containers */
+input[type="text"], textarea {
+  min-width: 0;
+}
+
+/* subtle improvements for mobile spacing */
+@media (max-width: 767px) {
+  .top-navbar { padding-left: 12px; padding-right: 12px; }
+  .approval-card, .admin-card { padding: 12px; }
+}
