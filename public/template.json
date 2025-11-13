@@ -1,0 +1,68 @@
+{
+  "pageDimensions": [2550, 3300],
+  "bubbleDimensions": [67, 67],
+  "preProcessors": [
+    {
+      "name": "CropOnMarkers",
+      "options": {
+        "relativePath": "omr_marker.jpg",
+        "sheetToMarkerWidthRatio": 17
+      }
+    }
+  ],
+  "customLabels": {
+    "Student_No": [
+      "1", "2", "3", "4", "5", "6", "7", "8" , "9", "10"
+    ]
+  },
+  "fieldBlocks": {
+    "Student_No": {
+      "fieldType": "QTYPE_INT",
+      "origin": [
+        110,
+        270
+      ],
+      "fieldLabels": [
+        "1", "2", "3", "4", "5", "6", "7", "8" , "9", "10"
+      ],
+      "bubblesGap": 91,
+      "labelsGap": 150
+    },
+    "MCQBlock1": {
+      "fieldType": "QTYPE_MCQ4",
+      "origin": [
+        270,
+        1364
+      ],
+      "fieldLabels": [
+        "q1..20"
+      ],
+      "bubblesGap": 145,
+      "labelsGap": 95
+    },
+    "MCQBlock2": {
+      "fieldType": "QTYPE_MCQ4",
+      "origin": [
+        1165,
+        1364
+      ],
+      "fieldLabels": [
+        "q21..40"
+      ],
+      "bubblesGap": 145,
+      "labelsGap": 95
+    },
+    "MCQBlock3": {
+      "fieldType": "QTYPE_MCQ4",
+      "origin": [
+        2000,
+        1364
+      ],
+      "fieldLabels": [
+        "q41..60"
+      ],
+      "bubblesGap": 133,
+      "labelsGap": 95
+    }
+  }
+}

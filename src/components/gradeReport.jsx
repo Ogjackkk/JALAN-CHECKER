@@ -1,8 +1,7 @@
 import "/src/components/style.css";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useEffect, useRef } from "react";
-import { processPDF } from "../utils/pdfProcessor";
-import { OMRProcessor } from "../utils/omrProcessor";
+import { useState, useEffect, useRef } from "react";
+import { PDFDocument } from 'pdf-lib';
 import { supabase } from '../supabaseClient';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, pdf } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
@@ -485,6 +484,58 @@ const restoreExam = async (exam) => {
     }
   };
 
+  const processOMR = async (answersInOrder, pdfFile) => {
+    try {
+      // 1. Fetch JSON files from public folder
+      const [configRes, templateRes] = await Promise.all([
+        fetch('/config.json'),
+        fetch('/template.json')
+      ]);
+
+      const configJson = await configRes.json();
+      const templateJson = await templateRes.json();
+
+      // 2. If you want, inject answers into evaluation JSON
+      const evaluationJson = {
+        source_type: "custom",
+        options: {
+          questions_in_order: answersInOrder.map((_, i) => `q${i+1}`),
+          answers_in_order: answersInOrder
+        },
+        marking_schemes: {
+          DEFAULT: { correct: "1", incorrect: "0", unmarked: "0" }
+        }
+      };
+
+      // 3. Fetch OMR marker image from public folder as Blob
+      const markerRes = await fetch('/omr_marker.jpg');
+      const markerBlob = await markerRes.blob();
+
+      // 4. Prepare FormData
+      const formData = new FormData();
+      formData.append("config", new Blob([JSON.stringify(configJson)], { type: "application/json" }));
+      formData.append("template", new Blob([JSON.stringify(templateJson)], { type: "application/json" }));
+      formData.append("evaluation", new Blob([JSON.stringify(evaluationJson)], { type: "application/json" }));
+      formData.append("omr_marker", markerBlob);
+      formData.append("pdf_file", pdfFile);
+
+      // 5. Send to API
+      const response = await fetch('https://sairusses-jalan-api.hf.space/process-omr', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`OMR API error: ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (err) {
+      console.error("OMR processing failed:", err);
+      return null;
+    }
+  };
+
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file || file.type !== 'application/pdf') {
@@ -497,7 +548,7 @@ const restoreExam = async (exam) => {
     setError('');
 
     try {
-      // First fetch the answer key data
+      // Fetch the answer key data
       const { data: answerKey, error: keyError } = await supabase
         .from('answer_keys')
         .select('*')
@@ -508,49 +559,58 @@ const restoreExam = async (exam) => {
         throw new Error('Could not fetch answer key data');
       }
 
-      // Parse answers if stored as JSON string
-      const correctAnswers = Array.isArray(answerKey.answers) 
-        ? answerKey.answers 
+      const correctAnswers = Array.isArray(answerKey.answers)
+        ? answerKey.answers
         : JSON.parse(answerKey.answers || '[]');
 
       if (!Array.isArray(correctAnswers)) {
         throw new Error('Invalid answer key format');
       }
 
-      const processor = new OMRProcessor();
-      const pdfResults = await processPDF(file);
-      
-      const totalQuestions = correctAnswers.length;
-      
-      const processedResults = [];
-      for (const page of pdfResults) {
-        const result = await processor.process(page.canvas, totalQuestions);
-        
-        // Ensure student answers array matches length of correct answers
-        const studentAnswers = Array(totalQuestions).fill('');
-        if (Array.isArray(result.answers)) {
-          result.answers.forEach((ans, idx) => {
-            if (idx < totalQuestions) {
-              studentAnswers[idx] = ans;
-            }
-          });
-        }
+      // Read PDF as ArrayBuffer
+      const fileArrayBuffer = await file.arrayBuffer();
+      const pdfDoc = await PDFDocument.load(fileArrayBuffer);
+      const totalPages = pdfDoc.getPageCount();
 
-        const score = calculateScore(studentAnswers, correctAnswers);
-        
+      const processedResults = [];
+
+      for (let i = 0; i < totalPages; i++) {
+        // Create a new PDF with only the current page
+        const newPdf = await PDFDocument.create();
+        const [copiedPage] = await newPdf.copyPages(pdfDoc, [i]);
+        newPdf.addPage(copiedPage);
+        const pdfBytes = await newPdf.save();
+        const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+        // Call your existing processOMR function
+        const apiResponse = await processOMR(correctAnswers, pdfBlob);
+
+        if (!apiResponse) continue;
+
+        const studentNumber = apiResponse.read_response?.Student_No || `UNKNOWN_PAGE_${i + 1}`;
+        const studentAnswers = Object.keys(apiResponse.read_response || {})
+          .filter((k) => k.startsWith('q'))
+          .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)))
+          .map((k) => apiResponse.read_response[k] || '');
+
+        const score = Number(apiResponse.score || 0);
+        const totalQuestions = correctAnswers.length;
+
         processedResults.push({
-          studentNumber: result.studentNumber || 'UNKNOWN',
+          studentNumber,
           answers: studentAnswers,
           score,
-          totalQuestions
+          totalQuestions,
+          page: i + 1
         });
       }
 
+      // Save all page results
       await saveResults(processedResults);
       setResults(processedResults);
       setModalStep('done');
 
-      // Refresh counts for UI
+      // Refresh UI counts
       fetchScannedCounts();
 
     } catch (err) {
@@ -796,109 +856,6 @@ const getSortedFilteredResults = () => {
     setAnalysisStudent(null);
     setAnalysisImage(null);
     setImgSize({ w: 0, h: 0 });
-  };
-
-  // when image loads get natural dimensions
-  const onAnalysisImageLoad = (e) => {
-    const img = e.target;
-    setImgSize({ w: img.naturalWidth || img.width, h: img.naturalHeight || img.height });
-  };
-
-  // Render overlay bubbles: configurable layout
-  // accepts optional overrideSize { w, h } used when there's no scanned image available
-  const renderBubblesOverlay = (student, answerKey, overrideSize = null) => {
-    if (!student) return null;
-
-    const w = (overrideSize && overrideSize.w) || imgSize.w || 1000; // fallback width
-    const h = (overrideSize && overrideSize.h) || imgSize.h || 1400; // fallback height
-
-    // student.answers expected as array like ['A','B','',...]
-    const studentAnswers = Array.isArray(student.answers) ? student.answers : (student.answers ? JSON.parse(student.answers || '[]') : []);
-    const correctAnswers = Array.isArray(answerKey) ? answerKey : (answerKey?.answers ? (Array.isArray(answerKey.answers) ? answerKey.answers : JSON.parse(answerKey.answers || '[]')) : []);
-
-    const totalQuestions = Math.max(correctAnswers.length, studentAnswers.length);
-    if (totalQuestions === 0) return null;
-
-    // layout config (adjust to better match your sheet)
-    const questionsPerRow = 10; // how many questions horizontally
-    const choices = ['A', 'B', 'C', 'D']; // change if you have more options
-    const bubbleGapX = w / Math.max(questionsPerRow, 1);
-    const rows = Math.ceil(totalQuestions / questionsPerRow);
-    const rowHeight = h / Math.max(rows, 1);
-    const choiceGap = Math.min(bubbleGapX, rowHeight) / (choices.length + 1);
-
-    const bubbles = [];
-    for (let q = 0; q < totalQuestions; q++) {
-      const row = Math.floor(q / questionsPerRow);
-      const col = q % questionsPerRow;
-      const baseX = col * bubbleGapX + bubbleGapX / 2;
-      const baseY = row * rowHeight + rowHeight / 2;
-
-      // gather student's selections for this question (support multiple selections)
-      const sel = studentAnswers[q];
-      let selections = [];
-      if (Array.isArray(sel)) selections = sel.filter(Boolean);
-      else if (typeof sel === 'string' && sel.includes(',')) selections = sel.split(',').map(s => s.trim()).filter(Boolean);
-      else if (typeof sel === 'string' && sel.trim() !== '') selections = [sel.trim()];
-      else selections = [];
-
-      const correct = (correctAnswers[q] || '').toString().trim();
-
-      for (let c = 0; c < choices.length; c++) {
-        const ch = choices[c];
-        const x = baseX - ((choices.length - 1) * choiceGap) / 2 + c * choiceGap;
-        const y = baseY;
-        const r = Math.max(6, Math.min(18, Math.min(bubbleGapX, rowHeight) * 0.12)); // radius depends on image size
-
-        // determine style
-        let fill = 'rgba(255,255,255,0.0)';
-        let stroke = 'rgba(0,0,0,0.25)';
-
-        const selected = selections.includes(ch);
-        const multipleMarked = selections.length > 1;
-        const unanswered = selections.length === 0;
-
-        if (selected && !multipleMarked) {
-          // single selection
-          if (ch === correct) {
-            fill = 'rgba(46, 204, 113, 0.9)'; // green
-            stroke = 'rgba(30,120,60,1)';
-          } else {
-            fill = 'rgba(231, 76, 60, 0.92)'; // red
-            stroke = 'rgba(160,20,20,1)';
-          }
-        } else if (selected && multipleMarked) {
-          // multiple selections -> mark selected bubbles red
-          fill = 'rgba(231, 76, 60, 0.92)';
-          stroke = 'rgba(160,20,20,1)';
-        } else if (unanswered && ch === correct) {
-          // unanswered: highlight correct answer in yellow
-          fill = 'rgba(241, 196, 15, 0.9)'; // yellow
-          stroke = 'rgba(160,120,10,1)';
-        } else {
-          fill = 'rgba(255,255,255,0)'; // transparent
-          stroke = 'rgba(0,0,0,0.06)';
-        }
-
-        bubbles.push({ q, ch, x, y, r, fill, stroke });
-      }
-    }
-
-    return (
-      <svg
-        width="100%"
-        height="100%"
-        viewBox={`0 0 ${w} ${h}`}
-        style={{ position: 'absolute', left: 0, top: 0, pointerEvents: 'none' }}
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {bubbles.map((b, i) => (
-          <g key={i}>
-            <circle cx={b.x} cy={b.y} r={b.r} fill={b.fill} stroke={b.stroke} strokeWidth={Math.max(1, b.r * 0.18)} />
-          </g>
-        ))}
-      </svg>
-    );
   };
   
   // --- INSERT: computeQuestionDifficulty helper (place BEFORE the return/UI) ---

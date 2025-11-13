@@ -60,8 +60,6 @@ const handleNumQuestionsChange = (e) => {
   // If it's not a number, stop here
   if (isNaN(val)) return;
 
-  // Clamp the value properly
-  if (val < 1) val = 1;
   if (val > 100) val = 100;
 
   // Force exact value in the input field
