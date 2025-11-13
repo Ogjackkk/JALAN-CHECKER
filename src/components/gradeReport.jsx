@@ -587,11 +587,16 @@ const restoreExam = async (exam) => {
 
         if (!apiResponse) continue;
 
-        const studentNumber = apiResponse.read_response?.Student_No || `UNKNOWN_PAGE_${i + 1}`;
+        let studentNumber = apiResponse.read_response?.Student_No || `UNKNOWN_PAGE_${i + 1}`;
+          if (studentNumber.length > 10) studentNumber = "";
+
         const studentAnswers = Object.keys(apiResponse.read_response || {})
           .filter((k) => k.startsWith('q'))
           .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)))
-          .map((k) => apiResponse.read_response[k] || '');
+          .map((k) => {
+            const ans = apiResponse.read_response[k] || '';
+            return ans.toLowerCase() === 'ABCD' ? "" : ans;
+          });
 
         const score = Number(apiResponse.score || 0);
         const totalQuestions = correctAnswers.length;
