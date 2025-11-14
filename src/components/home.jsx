@@ -30,7 +30,7 @@ const TeacherDashboard = () => {
     <div>
       {/* ----------------------------------------------- LOGO --------------------------------------------------------------- */}
       <div className="logo-container">
-        <img src="/src/img/stcathlogo.png" alt="Logo" className="logo" />
+        <img src="/stcathlogo.png" alt="Logo" className="logo" />
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
@@ -73,7 +73,7 @@ const TeacherDashboard = () => {
               title="Bubblesheet PDF"
               style={{ display: 'block' }}
             >
-              <img src="/src/img/pdf.png" alt="Bubblesheet PDF" className="pdf-icon" />
+              <img src="/pdf.png" alt="Bubblesheet PDF" className="pdf-icon" />
             </a>
             {/* Settings Icon */}
             <Link 
@@ -81,7 +81,7 @@ const TeacherDashboard = () => {
               title="Settings"
               style={{ display: 'block' }}
             >
-              <img src="/src/img/Settingss.png" alt="Settings" className="settings-icon" />
+              <img src="/Settingss.png" alt="Settings" className="settings-icon" />
             </Link>
           </div>
         </header>
@@ -93,7 +93,7 @@ const TeacherDashboard = () => {
           <div className="dashboard-item">
             <Link to="/answerKey">
               <div className="icon">
-                <img src="/src/img/AnswerKeys.png" alt="Answer Key" />
+                <img src="/AnswerKeys.png" alt="Answer Key" />
               </div>
               <p>Answer Key</p>
             </Link>
@@ -103,7 +103,7 @@ const TeacherDashboard = () => {
           <div className="dashboard-item">
             <Link to="/answerSheet">
               <div className="icon">
-                <img src="/src/img/Sheet.png" alt="Answer Sheet" />
+                <img src="/Sheet.png" alt="Answer Sheet" />
               </div>
               <p>Answer Sheet</p>
             </Link>
@@ -113,7 +113,7 @@ const TeacherDashboard = () => {
           <div className="dashboard-item">
             <Link to="/gradeReport">
               <div className="icon">
-                <img src="/src/img/ReportGrade.png" alt="Grade Report" />
+                <img src="/ReportGrade.png" alt="Grade Report" />
               </div>
               <p>Exam</p>
             </Link>

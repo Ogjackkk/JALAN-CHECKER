@@ -173,7 +173,7 @@ const AnswerSheet = () => {
             }}
             aria-label="Home"
           >
-            <img src="/src/img/house.png" alt="Back" style={{ width: "32px", marginRight: "12px", cursor: "pointer" }} />
+            <img src="/house.png" alt="Back" style={{ width: "32px", marginRight: "12px", cursor: "pointer" }} />
           </Link>
           <span style={{ color: "#fff", fontWeight: "bold", fontSize: "22px", letterSpacing: "1px" }}>
             ANSWER SHEET
@@ -190,7 +190,7 @@ const AnswerSheet = () => {
             className=""
             style={{ color: "#fff", textDecoration: "none", fontWeight: 500 }}
           >
-            <img src="/src/img/AnswerKeys.png" alt="Answer Key" style={{ width: "28px", verticalAlign: "middle", marginRight: "6px" }} />
+            <img src="/AnswerKeys.png" alt="Answer Key" style={{ width: "28px", verticalAlign: "middle", marginRight: "6px" }} />
             Answer Key
           </Link>
           <Link
@@ -202,7 +202,7 @@ const AnswerSheet = () => {
             className="active"
             style={{ color: "#fff", textDecoration: "underline", fontWeight: 700 }}
           >
-            <img src="/src/img/Sheet.png" alt="Answer Sheet" style={{ width: "28px", verticalAlign: "middle", marginRight: "6px" }} />
+            <img src="/Sheet.png" alt="Answer Sheet" style={{ width: "28px", verticalAlign: "middle", marginRight: "6px" }} />
             Answer Sheet
           </Link>
           <Link
@@ -213,7 +213,7 @@ const AnswerSheet = () => {
             }}
             style={{ color: "#fff", textDecoration: "none", fontWeight: 500 }}
           >
-            <img src="/src/img/ReportGrade.png" alt="Grade Report" style={{ width: "28px", verticalAlign: "middle", marginRight: "6px" }} />
+            <img src="/ReportGrade.png" alt="Grade Report" style={{ width: "28px", verticalAlign: "middle", marginRight: "6px" }} />
             Exam
           </Link>
         </div>

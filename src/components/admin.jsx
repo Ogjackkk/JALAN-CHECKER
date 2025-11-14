@@ -826,7 +826,7 @@ const Admin = () => {
                 justifyContent: "space-between"
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <img src="/src/img/excel.png" alt="Excel" style={{ width: 36, opacity: batchProcessing ? 0.6 : 1 }} />
+                  <img src="/excel.png" alt="Excel" style={{ width: 36, opacity: batchProcessing ? 0.6 : 1 }} />
                   <div style={{ textAlign: "left" }}>
                     <div style={{ fontSize: 13, color: "#444" }}>Upload Excel (.xlsx/.xls)</div>
                     <div style={{ fontSize: 12, color: "#888", marginTop: 4 }}>Columns: student_number, username</div>

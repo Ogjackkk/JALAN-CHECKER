@@ -128,7 +128,7 @@ const Register = () => {
         dangerouslySetInnerHTML={{
           __html: `
             body {
-              background-image: url('/src/img/st cath bf.jpg');
+              background-image: url('/st cath bf.jpg');
               background-size: cover;
               background-repeat: no-repeat;
               background-position: center;
@@ -243,7 +243,7 @@ const Register = () => {
           <div className="modal modern-modal">
             <form onSubmit={handleGoogleProfileSubmit} className="modern-modal-form">
               <div className="modal-header">
-                <img src="stcathlogo.png" alt="Logo" className="modal-logo" />
+                <img src="/stcathlogo.png" alt="Logo" className="modal-logo" />
                 <h2>Complete Your Profile</h2>
                 <p className="modal-desc">
                   Welcome! Please provide your Teacher ID Number and Full Name to finish your registration.
