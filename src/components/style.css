@@ -931,3 +931,176 @@ input[type="text"], textarea {
   .top-navbar { padding-left: 12px; padding-right: 12px; }
   .approval-card, .admin-card { padding: 12px; }
 }
+
+/* Add this to your style.css or inside a <style> tag */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 32px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  min-width: 320px;
+  max-width: 90vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.modal form {
+  background: #fff;
+  padding: 32px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  min-width: 320px;
+  max-width: 90vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal h3 {
+  margin-bottom: 18px;
+  text-align: center;
+}
+.modal label {
+  display: block;
+  margin-bottom: 12px;
+}
+.modal input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.modal .btn {
+  width: 100%;
+  background: #4285F4;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Modern Modal Styles */
+.modern-modal {
+  background: #fff;
+  padding: 0;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 180, 80, 0.18), 0 1.5px 8px rgba(60, 180, 80, 0.10);
+  min-width: 340px;
+  max-width: 95vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  animation: fadeIn 0.4s;
+  overflow: hidden;
+}
+
+.modern-modal-form {
+  padding: 32px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.modal-logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+}
+
+.modal-header h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 6px;
+}
+
+.modal-desc {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0;
+}
+
+.modal-fields label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.modal-fields span {
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.modal-fields input {
+  padding: 10px 12px;
+  border: 1.5px solid #b2dfdb;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #f9fefb;
+  transition: border 0.2s;
+  outline: none;
+}
+
+.modal-fields input:focus {
+  border: 1.5px solid #4caf50;
+  background: #f1fff5;
+}
+
+.modern-btn {
+  background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  margin-top: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.modern-btn:hover {
+  background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+@media (max-width: 480px) {
+  .modern-modal-form {
+    padding: 18px 8px 16px 8px;
+  }
+  .modern-modal {
+    min-width: 0;
+    width: 98vw;
+  }
+}

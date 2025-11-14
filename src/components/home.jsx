@@ -1,7 +1,31 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { supabase } from '../supabaseClient';
 import "/src/components/style.css"; // Corrected import path
 
 const TeacherDashboard = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkGoogleTeacher = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user && user.app_metadata?.provider === 'google') {
+        // Check if teacher exists
+        const { data: teacher } = await supabase
+          .from('teachers')
+          .select('id')
+          .eq('id', user.id)
+          .single();
+
+        if (!teacher) {
+          // Redirect to register page to complete profile
+          navigate('/register');
+        }
+      }
+    };
+    checkGoogleTeacher();
+  }, [navigate]);
+
   return (
     <div>
       {/* ----------------------------------------------- LOGO --------------------------------------------------------------- */}

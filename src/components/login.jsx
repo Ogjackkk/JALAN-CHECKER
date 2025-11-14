@@ -1,6 +1,6 @@
 import "/src/components/style.css";
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
@@ -105,6 +105,42 @@ const Login = () => {
     }
   };
 
+  // Google login handler
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + '/login'
+      }
+    });
+    if (error) {
+      setError(error.message);
+    }
+  };
+
+  // Check for Google user after redirect
+  useEffect(() => {
+    const checkGoogleUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user && user.app_metadata?.provider === 'google') {
+        // Check if teacher exists
+        const { data: teacher } = await supabase
+          .from('teachers')
+          .select('id')
+          .eq('id', user.id)
+          .single();
+
+        if (!teacher) {
+          // Redirect to register page to complete profile
+          navigate('/register');
+        } else {
+          navigate('/home');
+        }
+      }
+    };
+    checkGoogleUser();
+  }, [navigate]);
+
   return (
     <>
       <style
@@ -124,7 +160,7 @@ const Login = () => {
           <header>Login</header>
           <form onSubmit={handleSubmit}>
             <div className="field input">
-              <label htmlFor="identifier">Email or Username</label>
+              <label htmlFor="identifier">Email</label>
               <input
                 type="text"
                 name="identifier"
@@ -171,6 +207,16 @@ const Login = () => {
                 disabled={loading}
               />
               {error && <div className="error-message">{error}</div>}
+            </div>
+            <div className="field">
+              <button
+                type="button"
+                className="btn"
+                style={{ width: '100%', marginTop: '8px', background: '#4285F4', color: '#fff' }}
+                onClick={handleGoogleLogin}
+              >
+                Login with Google
+              </button>
             </div>
 
             <div className="link">

@@ -12,6 +12,7 @@ import Setting from './setting';
 import Admin from './admin';
 import AdminSetting from './adminsetting';
 import Offline from './Offline';
+import ResetPassword from './resetPassword';
 
 const App = () => {
   return (
@@ -33,6 +34,10 @@ const App = () => {
               <Register />
             </PublicRoute>
           }
+        />
+        <Route
+          path="/reset-password"
+          element={<ResetPassword />}
         />
 
         {/* Protected Teacher Routes */}

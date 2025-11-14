@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
+
 const GradeReport = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -1898,7 +1899,7 @@ const getSortedFilteredResults = () => {
                 })();
 
                 // Parse correct answers
-                const correctAnswers = (() => {
+                  const correctAnswers = (() => {
                   if (!selectedExamCode?.answers) return [];
                   if (Array.isArray(selectedExamCode.answers)) return selectedExamCode.answers;
                   try {
@@ -1909,7 +1910,9 @@ const getSortedFilteredResults = () => {
                   }
                 })();
 
-                const totalQuestions = Math.max(correctAnswers.length || 0, studentAnswers.length || 0);
+                // Only use answer key length as source of truth for total questions
+                const totalQuestions = correctAnswers.length || 0;
+                // ...existing code...  
                 const choiceLetters = ['A', 'B', 'C', 'D'];
 
                 if (totalQuestions === 0) {

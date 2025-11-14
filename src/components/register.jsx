@@ -6,13 +6,22 @@ import { supabase } from '../supabaseClient';
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    teacherIdNumber: '', // <-- Added
+    teacherIdNumber: '',
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
   const [showPassword, setShowPassword] = useState(false);
+
+  // For Google signup modal
+  const [showGoogleModal, setShowGoogleModal] = useState(false);
+  const [googleProfile, setGoogleProfile] = useState({
+    teacherIdNumber: '',
+    username: '',
+  });
+
+  const [showConfirmNotice, setShowConfirmNotice] = useState(false);
 
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -37,16 +46,14 @@ const Register = () => {
       return;
     }
 
-    // IMPORTANT: Use the auth user id as the teacher id.
     const teacherId = authData.user.id;
 
-    // Use upsert to insert or update teacher record
     const { error: dbError } = await supabase
       .from('teachers')
       .upsert([
         {
           id: teacherId,
-          teacher_id_number: teacherIdNumber, // <-- Added
+          teacher_id_number: teacherIdNumber,
           username,
           email
         }
@@ -57,7 +64,61 @@ const Register = () => {
       return;
     }
 
-    // Redirect teacher to the teacher dashboard
+    setShowConfirmNotice(true);
+  };
+
+  // Google signup handler
+  const handleGoogleSignUp = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + '/register'
+      }
+    });
+    if (error) {
+      alert(error.message);
+    }
+  };
+
+  // Check for Google user after redirect
+  useState(() => {
+    const checkGoogleUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user && user.app_metadata?.provider === 'google') {
+        // Check if teacher already exists
+        const { data: teacher } = await supabase
+          .from('teachers')
+          .select('id')
+          .eq('id', user.id)
+          .single();
+
+        if (!teacher) {
+          setShowGoogleModal(true);
+          setGoogleProfile({
+            teacherIdNumber: '',
+            username: user.user_metadata?.full_name || ''
+          });
+        } else {
+          navigate('/home');
+        }
+      }
+    };
+    checkGoogleUser();
+  }, []);
+
+  // Handle Google profile modal submit
+  const handleGoogleProfileSubmit = async (e) => {
+    e.preventDefault();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    await supabase.from('teachers').insert([{
+      id: user.id,
+      teacher_id_number: googleProfile.teacherIdNumber,
+      username: googleProfile.username,
+      email: user.email
+    }]);
+    setShowGoogleModal(false);
     navigate('/home');
   };
 
@@ -75,9 +136,6 @@ const Register = () => {
           `,
         }}
       />
-      <div className="logo-container">
-        <img src="/src/img/stcathlogo.png" alt="Logo" className="logo" />
-      </div>
       <div className="container">
         <div className="box form-box">
           <header>Teacher Registration</header>
@@ -158,12 +216,66 @@ const Register = () => {
             <div className="field">
               <input type="submit" className="btn" name="submit" value="Sign up" />
             </div>
+            <div className="field">
+              <button
+                type="button"
+                className="btn"
+                style={{ width: '100%', marginTop: '8px', background: '#4285F4', color: '#fff' }}
+                onClick={handleGoogleSignUp}
+              >
+                Sign up with Google
+              </button>
+            </div>
             <div className="link">
               Already have an account? <Link to="/login">Log in</Link>
             </div>
           </form>
+          {showConfirmNotice && (
+            <div className="confirmation-notice">
+              Registration successful! Please check your email and click the confirmation link before logging in.
+            </div>
+          )}
         </div>
       </div>
+      {/* Google profile modal */}
+      {showGoogleModal && (
+        <div className="modal-overlay">
+          <div className="modal modern-modal">
+            <form onSubmit={handleGoogleProfileSubmit} className="modern-modal-form">
+              <div className="modal-header">
+                <img src="/src/img/stcathlogo.png" alt="Logo" className="modal-logo" />
+                <h2>Complete Your Profile</h2>
+                <p className="modal-desc">
+                  Welcome! Please provide your Teacher ID Number and Full Name to finish your registration.
+                </p>
+              </div>
+              <div className="modal-fields">
+                <label>
+                  <span>Teacher ID Number</span>
+                  <input
+                    type="text"
+                    value={googleProfile.teacherIdNumber}
+                    onChange={e => setGoogleProfile({ ...googleProfile, teacherIdNumber: e.target.value })}
+                    required
+                    placeholder="Enter your Teacher ID Number"
+                  />
+                </label>
+                <label>
+                  <span>Full Name</span>
+                  <input
+                    type="text"
+                    value={googleProfile.username}
+                    onChange={e => setGoogleProfile({ ...googleProfile, username: e.target.value })}
+                    required
+                    placeholder="Enter your full name"
+                  />
+                </label>
+              </div>
+              <button type="submit" className="btn modern-btn">Save & Continue</button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

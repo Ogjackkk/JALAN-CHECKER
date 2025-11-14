@@ -63,11 +63,30 @@ const AnswerSheet = () => {
   };
 
   const confirmDelete = async () => {
+    // First, delete all scan_results that reference this answer key
+    const { error: scanError } = await supabase
+      .from("scan_results")
+      .delete()
+      .eq("answer_key_id", deleteId);
+
+    if (scanError) {
+      console.error("Failed to delete scan results:", scanError.message);
+      alert("Failed to delete scan results: " + scanError.message);
+      setShowDeleteModal(false);
+      setDeleteId(null);
+      return;
+    }
+
+    // Then delete the answer key
     const { error } = await supabase
       .from("answer_keys")
       .delete()
       .eq("id", deleteId);
-    if (!error) {
+    
+    if (error) {
+      console.error("Delete failed:", error.message);
+      alert("Failed to delete: " + error.message);
+    } else {
       setAnswerKeys((prev) => prev.filter((key) => key.id !== deleteId));
     }
     setShowDeleteModal(false);
