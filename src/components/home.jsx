@@ -29,9 +29,6 @@ const TeacherDashboard = () => {
   return (
     <div>
       {/* ----------------------------------------------- LOGO --------------------------------------------------------------- */}
-      <div className="logo-container">
-        <img src="/stcathlogo.png" alt="Logo" className="logo" />
-      </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
         /* Improve touch targets for mobile */
