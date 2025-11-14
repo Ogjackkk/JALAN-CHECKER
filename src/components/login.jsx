@@ -147,7 +147,7 @@ const Login = () => {
         dangerouslySetInnerHTML={{
           __html: `
             body {
-              background-image: url('/img/st cath bf.jpg');
+              background-image: url('/st cath bf.jpg');
               background-size: cover;
               background-repeat: no-repeat;
               background-position: center;
