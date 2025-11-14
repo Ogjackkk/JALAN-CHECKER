@@ -67,13 +67,12 @@ const TeacherDashboard = () => {
           <div className="top-icons" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {/* PDF Icon: Opens bubblesheet.pdf in a new tab */}
             <a 
-              href="/bubble-sheet.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              title="Bubblesheet PDF"
+              href="bubble-sheet.pdf" 
+              download
+              title="Download Bubblesheet PDF"
               style={{ display: 'block' }}
             >
-              <img src="/pdf.png" alt="Bubblesheet PDF" className="pdf-icon" />
+              <img src="/pdf.png" alt="Download Bubblesheet PDF" className="pdf-icon" />
             </a>
             {/* Settings Icon */}
             <Link 
