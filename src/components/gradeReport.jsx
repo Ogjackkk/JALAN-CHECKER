@@ -716,35 +716,46 @@ const getSortedFilteredResults = () => {
       });
 
       // 2. Assign unique UNKNOWN names to new results
-      let nextUnknown = unknownSuffix;
-      const enrichedResults = results.map(result => {
-        let studentNumber = result.studentNumber || 'UNKNOWN';
-        if (/^UNKNOWN$/i.test(studentNumber)) {
-          studentNumber = nextUnknown === 0 ? 'UNKNOWN' : `UNKNOWN ${nextUnknown}`;
-          nextUnknown++;
-        }
-        const studentAnswers = result.answers.map(ans => {
-          if (Array.isArray(ans)) return ans.join(',');
-          return ans?.toString().trim() || '';
-        });
-        return {
-          answer_key_id: selectedExamCode.id,
-          uploaded_by: user.id,
-          student_number: studentNumber,
-          answers: studentAnswers,
-          score: result.score,
-          total_questions: result.totalQuestions,
-          username: null,
-          created_at: new Date().toISOString()
-        };
-      });
+let nextUnknown = unknownSuffix;
+const enrichedResults = results.map(result => {
+  let studentNumber = result.studentNumber || 'UNKNOWN';
+  if (/^UNKNOWN$/i.test(studentNumber)) {
+    studentNumber = nextUnknown === 0 ? 'UNKNOWN' : `UNKNOWN ${nextUnknown}`;
+    nextUnknown++;
+  }
+  const studentAnswers = result.answers.map(ans => {
+    if (Array.isArray(ans)) return ans.join(',');
+    return ans?.toString().trim() || '';
+  });
+  return {
+    answer_key_id: selectedExamCode.id,
+    uploaded_by: user.id,
+    student_number: studentNumber,
+    answers: studentAnswers,
+    score: result.score,
+    total_questions: result.totalQuestions,
+    username: null,
+    created_at: new Date().toISOString()
+  };
+});
+// --- Deduplicate by answer_key_id + student_number ---
+const uniqueResults = [];
+const seen = new Set();
+for (const r of enrichedResults) {
+  const key = `${r.answer_key_id}-${r.student_number}`;
+  if (!seen.has(key)) {
+    seen.add(key);
+    uniqueResults.push(r);
+  }
+}
 
-      // 3. Upsert all (no need to split, all UNKNOWNs are now unique)
-      const { data, error } = await supabase
-        .from('scan_results')
-        .upsert(enrichedResults, { onConflict: ['answer_key_id', 'student_number'] })
-        .select();
-      if (error) throw error;
+
+const { data, error } = await supabase
+  .from('scan_results')
+  .upsert(uniqueResults, { onConflict: ['answer_key_id', 'student_number'] })
+  .select();
+if (error) throw error;
+
 
       // 4. Update usernames where possible (same as before)
       const studentNumbers = data
@@ -766,6 +777,7 @@ const getSortedFilteredResults = () => {
             }
           });
         }
+        
 
         for (const result of data) {
           const studentInfo = studentMap[result.student_number];
