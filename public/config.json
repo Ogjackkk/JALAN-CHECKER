@@ -7,5 +7,13 @@
   },
   "outputs": {
     "show_image_level": 0
-  }
+  },
+   "threshold_params": {
+            "GAMMA_LOW": 0.7,
+            "MIN_GAP": 30,
+            "MIN_JUMP": 20,
+            "CONFIDENT_SURPLUS": 3,
+            "JUMP_DELTA": 20,
+            "PAGE_TYPE_FOR_THRESHOLD": "white"
+        }
 }
